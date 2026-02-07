@@ -1,16 +1,18 @@
 package com.openclassrooms.etudiant.service;
 
-import com.openclassrooms.etudiant.entities.User;
-import com.openclassrooms.etudiant.repository.UserRepository;
-import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.Optional;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.util.Optional;
+import com.openclassrooms.etudiant.entities.User;
+import com.openclassrooms.etudiant.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
@@ -37,9 +39,9 @@ public class UserService {
         Assert.notNull(login, "Login must not be null");
         Assert.notNull(password, "Password must not be null");
         Optional<User> user = userRepository.findByLogin(login);
-        if (user.isPresent() && passwordEncoder.matches(password, password)) {
+        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
             UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
-                    .username(login).build();
+                    .username(login).password(user.get().getPassword()).build();
             return jwtService.generateToken(userDetails);
         } else {
             throw new IllegalArgumentException("Invalid credentials");
