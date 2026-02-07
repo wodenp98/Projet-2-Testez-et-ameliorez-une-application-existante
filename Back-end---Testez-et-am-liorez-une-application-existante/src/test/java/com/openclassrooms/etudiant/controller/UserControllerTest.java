@@ -1,10 +1,7 @@
 package com.openclassrooms.etudiant.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.openclassrooms.etudiant.dto.RegisterDTO;
-import com.openclassrooms.etudiant.entities.User;
-import com.openclassrooms.etudiant.repository.UserRepository;
-import com.openclassrooms.etudiant.service.UserService;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +17,11 @@ import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.openclassrooms.etudiant.dto.RegisterDTO;
+import com.openclassrooms.etudiant.entities.User;
+import com.openclassrooms.etudiant.repository.UserRepository;
+import com.openclassrooms.etudiant.service.UserService;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc

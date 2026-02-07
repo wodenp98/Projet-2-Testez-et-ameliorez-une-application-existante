@@ -25,6 +25,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(value = {NotFoundException.class})
+    protected ResponseEntity<Object> handleNotFoundException(NotFoundException notFoundException,
+                                                              WebRequest request) {
+        logError(notFoundException);
+        return handleExceptionInternal(notFoundException, getErrorDetails(notFoundException, request),
+                new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(value = {BadCredentialsException.class})
     protected ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException badCredentialsException,
