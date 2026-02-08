@@ -1,0 +1,47 @@
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Students</h2>
+    <button class="btn btn-primary" (click)="addStudent()">Add Student</button>
+  </div>
+
+  @if (errorMessage) {
+    <div class="alert alert-danger">{{ errorMessage }}</div>
+  }
+
+  @if (loading) {
+    <div class="text-center">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (student of students; track student.id) {
+          <tr>
+            <td>{{ student.id }}</td>
+            <td>{{ student.firstName }}</td>
+            <td>{{ student.lastName }}</td>
+            <td>{{ student.email }}</td>
+            <td>
+              <button class="btn btn-info btn-sm mr-1" (click)="viewStudent(student.id)">View</button>
+              <button class="btn btn-warning btn-sm mr-1" (click)="editStudent(student.id)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="deleteStudent(student.id)">Delete</button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="text-center">No students found.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+</div>
