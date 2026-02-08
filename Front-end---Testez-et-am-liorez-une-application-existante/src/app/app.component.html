@@ -1,1 +1,17 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="/">Student Manager</a>
+  <div class="navbar-nav mr-auto">
+    @if (isLoggedIn) {
+      <a class="nav-item nav-link" routerLink="/students">Students</a>
+    }
+  </div>
+  <div class="navbar-nav ml-auto">
+    @if (isLoggedIn) {
+      <a class="nav-item nav-link" style="cursor: pointer" (click)="logout()">Logout</a>
+    } @else {
+      <a class="nav-item nav-link" routerLink="/login">Login</a>
+      <a class="nav-item nav-link" routerLink="/register">Register</a>
+    }
+  </div>
+</nav>
 <router-outlet/>

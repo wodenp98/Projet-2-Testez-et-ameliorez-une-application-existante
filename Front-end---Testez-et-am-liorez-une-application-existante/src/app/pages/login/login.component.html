@@ -1,9 +1,6 @@
 <div class="card m-3">
   <h5 class="card-header">Login</h5>
   <div class="card-body">
-    @if (token) {
-      <div class="alert alert-success">Login successful!</div>
-    }
     @if (errorMessage) {
       <div class="alert alert-danger">
         {{ errorMessage }}

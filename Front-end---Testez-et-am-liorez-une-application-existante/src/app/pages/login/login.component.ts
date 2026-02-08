@@ -3,6 +3,7 @@ import type { HttpErrorResponse } from '@angular/common/http';
 import { Component, DestroyRef, inject, type OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import type { Login } from '../../core/models/Login';
 import { UserService } from '../../core/service/user.service';
 import { MaterialModule } from '../../shared/material.module';
@@ -18,11 +19,11 @@ export class LoginComponent implements OnInit {
   private userService = inject(UserService);
   private formBuilder = inject(FormBuilder);
   private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
   loginForm: FormGroup = new FormGroup({});
   submitted: boolean = false;
   loading: boolean = false;
   errorMessage: string = '';
-  token: string = '';
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -34,7 +35,6 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.submitted = true;
     this.errorMessage = '';
-    this.token = '';
     if (this.loginForm.invalid) {
       return;
     }
@@ -47,9 +47,9 @@ export class LoginComponent implements OnInit {
       .login(loginUser)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (response: string) => {
-          this.token = response;
+        next: () => {
           this.loading = false;
+          this.router.navigate(['/students']);
         },
         error: (error: HttpErrorResponse) => {
           try {
